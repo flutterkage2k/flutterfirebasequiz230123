@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:flutterfirebasequiz230123/services/auth.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,6 +13,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    InternetConnectionChecker().onStatusChange.listen((status) {
+      final connected = status == InternetConnectionStatus.connected;
+      showSimpleNotification(
+        Text(
+          connected ? 'Connected to internet' : 'No internet',
+        ),
+        background: Colors.green,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -36,11 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 12,
             ),
-            ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Login with Google",
-                ))
+            SignInButton(Buttons.GoogleDark, onPressed: () async {
+              await signWithGoogle();
+            })
           ],
         ),
       ),
