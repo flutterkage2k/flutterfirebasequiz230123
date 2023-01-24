@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfirebasequiz230123/firebase_options.dart';
-import 'package:flutterfirebasequiz230123/screens/login.dart';
+import 'package:flutterfirebasequiz230123/screens/home_screen.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 Future<void> main() async {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverlaySupport.global(
       child: MaterialApp(
-        home: LoginScreen(),
+        home: HomeScreen(),
       ),
     );
   }
