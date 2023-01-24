@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfirebasequiz230123/services/firedb.dart';
+import 'package:flutterfirebasequiz230123/services/localdb.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -25,13 +26,13 @@ Future<User?> signWithGoogle() async {
   final User? currentUser = _auth.currentUser;
   assert(currentUser!.uid == user!.uid);
 
-  print(user);
   await FireDB().createNewUser(
     user!.displayName.toString(),
     user.email.toString(),
     user.photoURL.toString(),
     user.uid.toString(),
   );
+  await LocalDB.saveUserID(user.uid);
 
   // } catch (e) {
   //   print('Error occured in sign in');

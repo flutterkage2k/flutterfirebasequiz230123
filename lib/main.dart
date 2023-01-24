@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfirebasequiz230123/firebase_options.dart';
 import 'package:flutterfirebasequiz230123/screens/home_screen.dart';
+import 'package:flutterfirebasequiz230123/screens/quizintro.dart';
+import 'package:flutterfirebasequiz230123/services/localdb.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 Future<void> main() async {
@@ -12,14 +14,33 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isLogIn = false;
+
+  getLoggedInState() async {
+    await LocalDB.getUserId().then((value) {
+      setState(() {
+        isLogIn = value.toString() != "null";
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLoggedInState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return OverlaySupport.global(
       child: MaterialApp(
-        home: HomeScreen(),
+        home: isLogIn ? HomeScreen() : QuizIntro(),
       ),
     );
   }

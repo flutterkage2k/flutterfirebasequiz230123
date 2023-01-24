@@ -47,6 +47,8 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   overlay_support: ^2.1.0
 
+  carousel_slider: ^4.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
